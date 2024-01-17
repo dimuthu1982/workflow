@@ -6,5 +6,7 @@ jobs:
      runs-on: ubuntu-latest
      steps: 
       - run: echo "The head of this (${{ github.ref }})"
-      - run: echo "RELEASE_VERSION=${github.ref/release\//}"
+      - run: echo "BRANCH_PREFIX=refs/heads/release/"
+      - run: echo "Branch Prefix - BRANCH_PREFIX"
+      - run: echo "RELEASE_VERSION=${github.ref/$BRANCH_PREFIX/}"
       - run: echo "Version -  $RELEASE_VERSION"
