@@ -5,18 +5,9 @@ jobs:
   Explore-GitHub-Actions:
      runs-on: ubuntu-latest
      steps: 
-      - uses: actions/checkout@v2
-      - id: replace
-      - name: Find and Replace
-        uses: jacobtomlinson/gha=find-replace@v3
-        with: 
-          find: "release/"
-          replace: ""
-          
-      #- run: echo "The head of this (${{ github.ref }})"
-      #- run: echo BRANCH_PREFIX=refs/heads/release/ >> $GITHUB_ENV
-      #- run : |
-      #    RELEASE_VERSION=${github.ref/${BRANCH_PREFIX}/XXXXX} >> $GITHUB_ENV
-     # - run: echo "Branch Prefix - ($BRANCH_PREFIX)"
-      #- run: echo RELEASE_VERSION=${github.ref/${BRANCH_PREFIX}/XXXXX} >> $GITHUB_ENV
-      - run: echo "Version -  $RELEASE_VERSION, ($replace.replace.outputs.substring)"
+      - uses: bhowell2/github-substring-action@1.0.2
+        id: one
+        with:
+          value: "abc123"
+          index_of_str: "ab"
+      - run: echo "Print- $steps.one.outputs.substring"
