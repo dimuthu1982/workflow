@@ -11,4 +11,4 @@ jobs:
           value: "abc123"
           index_of_str: "ab"
           output_name: "substringData"
-      - run: echo "Print- ${substringData}"
+      - run: echo "Print- ${steps.one.outputs.substringData}"
