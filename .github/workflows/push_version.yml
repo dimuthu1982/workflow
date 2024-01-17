@@ -10,4 +10,5 @@ jobs:
         with:
           value: "${{ github.ref }})"
           index_of_str: "release/"
-      - run: echo "Print Version - ${{steps.one.outputs.substring}}"
+          output_name: "releaseVersion"
+      - run: echo "Print Version releaseVersion - ${{steps.one.outputs.releaseVersion}}"
