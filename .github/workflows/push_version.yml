@@ -10,4 +10,4 @@ jobs:
         with:
           value: "abc123"
           index_of_str: "ab"
-      - run: echo "Print- ${steps.one.outputs.substring}"
+      - run: echo "Print- #steps.one.outputs.substring"
