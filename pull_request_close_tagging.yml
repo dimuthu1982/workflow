@@ -1,5 +1,5 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: PR Merge Demo
+run-name: PR MErge GitHub Actions 🚀
 on: pull_request
   types: 
     - closed
