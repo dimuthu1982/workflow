@@ -8,6 +8,6 @@ jobs:
       - uses: bhowell2/github-substring-action@1.0.2
         id: one
         with:
-          value: "abc123"
-          index_of_str: "ab"
-      - run: echo "Print- ${{steps.one.outputs.substring}}"
+          value: "${{ github.ref }})"
+          index_of_str: "release/"
+      - run: echo "Print Version - ${{steps.one.outputs.substring}}"
