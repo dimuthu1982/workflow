@@ -5,4 +5,4 @@ jobs:
   Explore-GitHub-Actions:
      runs-on: ubuntu-latest
      steps: 
-      - run: echo "The head of this (${{ github.head_ref }})"
+      - run: echo "The head of this (${{ github.ref }})"
