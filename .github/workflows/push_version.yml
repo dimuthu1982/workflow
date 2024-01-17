@@ -5,7 +5,7 @@ jobs:
   Explore-GitHub-Actions:
      runs-on: ubuntu-latest
      steps: 
-      - uses: action/github-script@0.9.0
+      - uses: actions/github-script@0.9.0
         id: one
         with:
           script: |
