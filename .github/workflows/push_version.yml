@@ -9,5 +9,5 @@ jobs:
         id: one
         with:
           value: "abc123"
-          ndex_of_str: "ab"
+          index_of_str: "ab"
       - run: echo "Print- ${{steps.one.outputs.substring}}"
