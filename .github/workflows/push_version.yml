@@ -7,6 +7,8 @@ jobs:
      steps: 
       - run: echo "The head of this (${{ github.ref }})"
       - run: echo BRANCH_PREFIX=refs/heads/release/ >> $GITHUB_ENV
+      - run : |
+          RELEASE_VERSION=${github.ref/${BRANCH_PREFIX}/XXXXX} >> $GITHUB_ENV
       - run: echo "Branch Prefix - ($BRANCH_PREFIX)"
-      - run: echo RELEASE_VERSION=${github.ref/${BRANCH_PREFIX}/XXXXX} >> $GITHUB_ENV
+      #- run: echo RELEASE_VERSION=${github.ref/${BRANCH_PREFIX}/XXXXX} >> $GITHUB_ENV
       - run: echo "Version -  $RELEASE_VERSION"
