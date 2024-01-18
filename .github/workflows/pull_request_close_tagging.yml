@@ -27,8 +27,7 @@ jobs:
       - run: echo "Tagging master by version - ${{steps.one.outputs.releaseVersion}}"
       - name: Creating Tag
         uses: actions/checkout@v4
-      - run: echo "DKA user.name ($(git log -n 1 --pretty=format:%an))"
-      - run: echo "DKA user.email ($(git log -n 1 --pretty=format:%ae))"
+      - run: echo "DKA GITHUB_ACTOR (${GITHUB_ACTOR})"
       - run: echo "Login (${{ github.event.pull_request.user.login }})"
       - run: echo "Email - (${{ github.event.pull_request.user.email }})"
       - run: echo ".user.email - (${{ github.event.pull_request.pull_request.user.email }})"
