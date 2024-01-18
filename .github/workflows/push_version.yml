@@ -7,14 +7,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.7
-        with:
-          versionSpec: '5.3.x'
-      - name: Create git tag
+      - name: Create tag
         run: |
-          git tag "DKA_Test_T10"
-      - name: Push git tag
-        run: git push --tags
+          git tag -a v1.1.0 -m "Version 1.0"
+          git push --follow-tags
