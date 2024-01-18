@@ -6,15 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@latest
+        uses: gittools/actions/gitversion/setup@0.9.7
         with:
           versionSpec: '5.x'
       - name: Determine Version
-        uses: gittools/actions/gitversion/execute@latest
+        uses: gittools/actions/gitversion/execute@0.9.7
       - name: Display SemVer
         run: |
           echo "SemVer: $GITVERSION_SEMVER" && echo "$version" && echo "$major.$minor.$patch"
