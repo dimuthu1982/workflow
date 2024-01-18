@@ -6,8 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo "DATA - [${{ github.ref }}], [${{steps.one.outputs.releaseVersion}}]"
-      - run: echo "Print Version releaseVersion - ${{steps.one.outputs.releaseVersion}}"
-      - run: |
-          git tag -a DKA_T1 -m "Version T1"
-          git push --tags
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: DKA_T1
+          name: Release DKA_T1
+          body: "Test Content"
