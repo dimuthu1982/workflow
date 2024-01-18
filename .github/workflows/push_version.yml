@@ -1,16 +1,13 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions v1 🚀
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Bump version and push tag
-        id: tag_version
-        uses: rickstaa/action-create-tag@v1
-        with:
-         # github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: "DKA_T1"
-          tag_exists_error: false
-          message: "Created Tag DKA_T1"
+      - run: echo "DATA - [${{ github.ref }}], [${{steps.one.outputs.releaseVersion}}]"
+      - run: echo "Print Version releaseVersion - ${{steps.one.outputs.releaseVersion}}"
+      - run: |
+          git tag -a DKA_T1 -m "Version T1"
+          git push --tags
