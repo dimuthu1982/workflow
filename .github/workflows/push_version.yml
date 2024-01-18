@@ -10,7 +10,7 @@ jobs:
         id: tag_version
         uses: rickstaa/action-create-tag@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+         # github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: "DKA_T1"
           tag_exists_error: false
           message: "Created Tag DKA_T1"
