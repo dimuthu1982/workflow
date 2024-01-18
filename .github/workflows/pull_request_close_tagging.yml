@@ -1,5 +1,5 @@
 name: Tag master branch
-run-name: PR Merge GitHub Actions 🏷️
+run-name: Tag ${{steps.one.outputs.releaseVersion}} 🏷️
 on:
   pull_request:
     types:
@@ -21,22 +21,13 @@ jobs:
           value: "${{ github.head_ref }}"
           index_of_str: "release/"
           output_name: "releaseVersion"
-      #- run: echo "The head of this PR starts with 'release/'"
-      #- run: echo "Event Name (${{ github.event_name }}), HeadRef (${{ github.head_ref }}), PR Merged (${{github.event.pull_request.merged}})"
-      #- run: echo "RELEASE_VERSION=${github.head_ref/release\//}"
       - run: echo "Tagging master by version - ${{steps.one.outputs.releaseVersion}}"
+      - uses: actions/checkout@v4
       - name: Creating Tag
-        uses: actions/checkout@v4
-      - run: echo "DKA GITHUB_ACTOR (${GITHUB_ACTOR})"
-      - run: echo "Login (${{ github.event.pull_request.user.login }})"
-      - run: echo "Email - (${{ github.event.pull_request.user.email }})"
-      - run: echo ".user.email - (${{ github.event.pull_request.pull_request.user.email }})"
-      - run: echo "github.event.sender.id - ${{github.event.sender.id}}"
-      - run: echo "github.event.sender.login - ${{github.event.sender.login}}"
-      - run: echo "github.event.sender.login - ${{github.event.sender.login}}"
-      - run: git config --global user.name ${{ github.triggering_actor }}
-      - run: git config --global user.email ${{ github.triggering_actor }}@yahoo.com
-      - name: Create tag
-        run: |
-          git tag -a "v${{steps.one.outputs.releaseVersion}}" -m "Version ${{steps.one.outputs.releaseVersion}}"
-          git push --follow-tags
+        id: create_tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+         # github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: "v${{steps.one.outputs.releaseVersion}}"
+          tag_exists_error: false
+          message: "Tag v${{steps.one.outputs.releaseVersion}}"
