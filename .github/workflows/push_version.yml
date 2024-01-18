@@ -1,5 +1,5 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions T10 🚀
+run-name: ${{ github.actor }} is testing out GitHub Actions T11 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
@@ -7,6 +7,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Initialising
+      - run: git config --global user.name ${{ github.event.pusher.name }}
+      - run: git config --global user.email ${{ github.event.pusher.email }}"
       - name: Create tag
         run: |
           git tag -a v1.1.0 -m "Version 1.0"
