@@ -24,12 +24,11 @@ jobs:
       #- run: echo "Event Name (${{ github.event_name }}), HeadRef (${{ github.head_ref }}), PR Merged (${{github.event.pull_request.merged}})"
       #- run: echo "RELEASE_VERSION=${github.head_ref/release\//}"
       - run: echo "Tagging master by version - ${{steps.one.outputs.releaseVersion}}"
-      - run: |
-              git tag -l
-          
-     # - run: |
-     #       git tag -a ${{steps.one.outputs.releaseVersion}} -m "Version ${{steps.one.outputs.releaseVersion}}"
-     #       git push --follow-tags
-     # - uses: ncipollo/release-action@v1
-     #   with:
-     #     tag: ${{steps.one.outputs.releaseVersion}}
+      - name: Creating Tag
+        uses: actions/checkout@v4
+      - run: git config --global user.name ${{ github.event.pusher.name }}
+      - run: git config --global user.email ${{ github.event.pusher.email }}
+      - name: Create tag
+        run: |
+          git tag -a v1.1.0 -m "Version 1.0"
+          git push --follow-tags
