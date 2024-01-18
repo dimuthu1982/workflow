@@ -25,8 +25,8 @@ jobs:
       #- run: echo "RELEASE_VERSION=${github.head_ref/release\//}"
       - run: echo "Tagging master by version - ${{steps.one.outputs.releaseVersion}}"
       - run: |
-              gh tag -a ${{steps.one.outputs.releaseVersion}} -m "Version ${{steps.one.outputs.releaseVersion}}"
-              gh push --follow-tags
+              git tag -l
+          
      # - run: |
      #       git tag -a ${{steps.one.outputs.releaseVersion}} -m "Version ${{steps.one.outputs.releaseVersion}}"
      #       git push --follow-tags
