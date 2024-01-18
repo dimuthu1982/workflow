@@ -1,15 +1,13 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} is testing out GitHub Actions T2 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        env: 
+      - uses: actions/create-release@v1
+        env:
+          # This token is provided by Actions, you do not need to create your own token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "DATA - [${{ github.ref }}], [${{steps.one.outputs.releaseVersion}}]"
-      - run: echo "Print Version releaseVersion - ${{steps.one.outputs.releaseVersion}}"
-      - run: |
-          git tag -a DKA_T1 -m "Version T1"
-          git push --tags
+        with:
+          tag_name: "DKA_Test_T2"
