@@ -8,7 +8,7 @@ jobs:
       - name: Initialising
         uses: actions/checkout@v4
       - run: git config --global user.name ${{ github.event.pusher.name }}
-      - run: git config --global user.email ${{ github.event.pusher.email }}"
+      - run: git config --global user.email ${{ github.event.pusher.email }}
       - name: Create tag
         run: |
           git tag -a v1.1.0 -m "Version 1.0"
