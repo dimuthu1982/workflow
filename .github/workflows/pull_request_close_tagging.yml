@@ -1,5 +1,5 @@
-name: Tag master branch
-run-name: Tag ${{steps.one.outputs.releaseVersion}} 🏷️
+name: Create Tag
+run-name: Create Tag 🏷️
 on:
   pull_request:
     types:
