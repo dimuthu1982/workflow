@@ -3,23 +3,15 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-     runs-on: ubuntu-latest
-     steps: 
-#      - uses: bhowell2/github-substring-action@1.0.2
-#        id: one
-#        with:
-#          value: "${{ github.head_ref }})"
-#          index_of_str: "release/"
-#          output_name: "releaseVersion"
-       - name: Force Install GIT latest
-         run: |
-           apt-get install -y software-properties-common \
-           && apt-get update \
-           && add-apt-repository -y ppa:git-core/ppa \
-           && apt-get update \
-           && apt-get install -y git
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          apt-get install -y software-properties-common \
+          && apt-get update \
+          && add-apt-repository -y ppa:git-core/ppa \
+          && apt-get update \
+          && apt-get install -y git
       - run: echo "DATA - [${{ github.ref }}], [${{steps.one.outputs.releaseVersion}}]"
       - run: echo "Print Version releaseVersion - ${{steps.one.outputs.releaseVersion}}"
       - run: |
           git tag -l
-
