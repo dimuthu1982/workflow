@@ -1,5 +1,5 @@
 name: Tag master branch
-run-name: PR Merge GitHub Actions 🏷️ V1
+run-name: PR Merge GitHub Actions 🏷️
 on: 
   pull_request:
     types: 
