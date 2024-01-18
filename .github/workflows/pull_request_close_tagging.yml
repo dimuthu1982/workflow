@@ -27,7 +27,8 @@ jobs:
       - run: echo "Tagging master by version - ${{steps.one.outputs.releaseVersion}}"
       - name: Creating Tag
         uses: actions/checkout@v4
-      - run: git config --global user.name ${{ github.event.pusher.name }}
+      - run: echo "Login (${{ github.event.pull_request.user.login }}), triggering_actor - (${{ github.triggering_actor }}) or (${{ github.actor }})"
+      - run: git config --global user.name ${{ github.event.issue.user.login }}
       - run: git config --global user.email ${{ github.event.pusher.email }}
       - name: Create tag
         run: |
