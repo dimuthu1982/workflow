@@ -17,7 +17,7 @@ jobs:
       - uses: bhowell2/github-substring-action@1.0.2
         id: one
         with:
-          value: "${{ github.head_ref }}"
+          value: "${{github.head_ref}}"
           index_of_str: "release/"
           output_name: "releaseVersion"
       #- run: echo "The head of this PR starts with 'release/'"
