@@ -30,6 +30,9 @@ jobs:
       - run: echo "Login (${{ github.event.pull_request.user.login }})"
       - run: echo "Email - (${{ github.event.pull_request.user.email }})"
       - run: echo ".user.email - (${{ github.event.pull_request.pull_request.user.email }})"
+      - run: echo "github.event.sender.id - ${{github.event.sender.id}}"
+      - run: echo "github.event.sender.login - ${{github.event.sender.login}}"
+      - run: echo "github.event.sender.login - ${{github.event.sender.login}}"
       - run: git config --global user.name ${{ github.triggering_actor }}
       - run: git config --global user.email ${{ github.event.pusher.email }}
       - name: Create tag
