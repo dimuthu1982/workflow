@@ -35,8 +35,8 @@ jobs:
       - run: echo "github.event.sender.login - ${{github.event.sender.login}}"
       - run: echo "github.event.sender.login - ${{github.event.sender.login}}"
       - run: git config --global user.name ${{ github.triggering_actor }}
-      - run: git config --global user.email ${{ github.event.pusher.email }}
+      - run: git config --global user.email ${{ github.triggering_actor }}@yahoo.com
       - name: Create tag
         run: |
-          git tag -a v1.1.0 -m "Version 1.0"
+          git tag -a "v${{steps.one.outputs.releaseVersion}}" -m "Version ${{steps.one.outputs.releaseVersion}}"
           git push --follow-tags
