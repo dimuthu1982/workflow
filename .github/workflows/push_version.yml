@@ -5,12 +5,7 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          apt-get install -y software-properties-common \
-          && apt-get update \
-          && add-apt-repository -y ppa:git-core/ppa \
-          && apt-get update \
-          && apt-get install -y git
+      - uses: actions/checkout@v2
       - run: echo "DATA - [${{ github.ref }}], [${{steps.one.outputs.releaseVersion}}]"
       - run: echo "Print Version releaseVersion - ${{steps.one.outputs.releaseVersion}}"
       - run: |
