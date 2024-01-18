@@ -27,7 +27,6 @@ jobs:
      # - run: |
      #       git tag -a ${{steps.one.outputs.releaseVersion}} -m "Version ${{steps.one.outputs.releaseVersion}}"
      #       git push --follow-tags
-      - uses: hole19/git-tag-action@master
-        env:
-          TAG: ${{steps.one.outputs.releaseVersion}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ncipollo/release-action@v1
+        with:
+          tag: ${{steps.one.outputs.releaseVersion}}
