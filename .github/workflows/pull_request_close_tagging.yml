@@ -22,7 +22,7 @@ jobs:
       - run: echo "Tag by version - ${{steps.one.outputs.releaseVersion}}"
       - uses: actions/checkout@v4
       - name: Add Tag
-      - uses: rickstaa/action-create-tag@v1
+        uses: rickstaa/action-create-tag@v1
         with:
          # github_token: ${{ secrets.GITHUB_TOKEN }}
           tag: "v${{steps.one.outputs.releaseVersion}}"
