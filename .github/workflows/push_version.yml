@@ -1,14 +1,25 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions T6 🚀
+run-name: ${{ github.actor }} is testing out GitHub Actions T7 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/create-release@latest
-        env:
-          # This token is provided by Actions, you do not need to create your own token
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          tag_name: "DKA_Test_T6"
+          fetch-depth: 0
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: '5.x'
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.7
+      - name: Display SemVer
+        run: |
+          echo "SemVer: $GITVERSION_SEMVER" && echo "$version" && echo "$major.$minor.$patch"
+      - name: Create git tag
+        run: |
+          git tag "DKA_Test_T7"
+      - name: Push git tag
+        run: git push --tags
