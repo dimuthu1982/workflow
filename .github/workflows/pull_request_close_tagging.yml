@@ -14,16 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #- run: echo "Event Name (${{ github.event_name }}), HeadRef (${{ github.head_ref }}), Ref (${{ github.ref }}), PR Merged (${{github.event.pull_request.merged}})"
-      - uses: actions/checkout@v4
       - uses: bhowell2/github-substring-action@1.0.2
-      - uses: rickstaa/action-create-tag@v1
+      #- uses: actions/checkout@v4
         id: one
         with:
           value: "${{ github.head_ref }}"
           index_of_str: "release/"
           output_name: "releaseVersion"
       - run: echo "Tag by version - ${{steps.one.outputs.releaseVersion}}"
-      #- uses: actions/checkout@v4
+      - uses: rickstaa/action-create-tag@v1
       - name: Creating Tag
         with:
          # github_token: ${{ secrets.GITHUB_TOKEN }}
