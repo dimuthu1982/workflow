@@ -7,7 +7,6 @@ jobs:
         outputs:
             MY_NAME: ${{steps.tag.outputs.NAME}}
             ENABLE_JOB: ${{steps.tag.outputs.ENABLE}}
-            
         steps: 
             - name: Set Var
               id: tag
