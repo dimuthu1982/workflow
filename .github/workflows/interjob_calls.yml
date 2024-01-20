@@ -10,9 +10,10 @@ jobs:
         steps: 
             - name: Set Var
               id: tag
-            - run: echo "Prnting form Job 1"
-            - run: echo "NAME=DKA" >> $GITHUB_OUTPUT
-            - run: echo "ENABLE=true" >> $GITHUB_OUTPUT
+              run: |
+                  echo "Prnting form Job 1"
+                  echo "NAME=DKA" >> $GITHUB_OUTPUT
+                  echo "ENABLE=true" >> $GITHUB_OUTPUT
         
 
     Job2:
