@@ -12,8 +12,8 @@ jobs:
             - run: echo "Prnting form Job 1"
             - name: Set Var
               id: tag
-              - run: echo "NAME=DKA" >> $GITHUB_OUTPUT
-              - run: echo "ENABLE=true" >> $GITHUB_OUTPUT
+            - run: echo "NAME=DKA" >> $GITHUB_OUTPUT
+            - run: echo "ENABLE=true" >> $GITHUB_OUTPUT
         
 
     Job2:
