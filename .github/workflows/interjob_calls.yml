@@ -13,11 +13,11 @@ jobs:
               run: |
                   echo "Prnting form Job 1"
                   echo "NAME=DKA" >> $GITHUB_OUTPUT
-                  echo "ENABLE=false" >> $GITHUB_OUTPUT
+                  echo ENABLE=false >> $GITHUB_OUTPUT
         
 
     Job2:
-        if: false
+        if: ${{jobs.Job1.outputs.ENABLE}}
         runs-on: ubuntu-latest
         needs: Job1
         steps:
