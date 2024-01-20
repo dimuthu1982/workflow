@@ -13,7 +13,7 @@ jobs:
               run: |
                   echo "Prnting form Job 1"
                   echo "NAME=DKA" >> $GITHUB_OUTPUT
-                  echo "ENABLE=true" >> $GITHUB_OUTPUT
+                  echo "ENABLE=false" >> $GITHUB_OUTPUT
         
 
     Job2:
