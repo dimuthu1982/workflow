@@ -1,1 +1,26 @@
+name: Inter Job Communucation
+run-name: Inter Job Communucation
+on: [push]
+jobs:
+    Job1:
+        runs-on: ubuntu-latest
+        outputs:
+            MY_NAME: ${{steps.tag.outputs.NAME}}
+            
+        steps: 
+            - run: echo "Prnting form Job 1"
+            - name: Set Var
+              id: tag
+              run: echo "NAME=DKA" >> $GITHUB_OUTPUT
+        
 
+    Job2:
+        if: true
+        runs-on: ubuntu-latest
+        needs: Job1
+        steps:
+            #- env:
+            #    release_type: ${{jobs.Job1.outputs.MY_NAME}}
+
+            - run: echo "Prnting form Job 2"
+            - run: echo "Got Data From- ${{needs.Job1.outputs.MY_NAME}}"
