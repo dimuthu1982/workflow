@@ -9,8 +9,8 @@ jobs:
             ENABLE_JOB: ${{steps.tag.outputs.ENABLE}}
             
         steps: 
-            - run: echo "Prnting form Job 1"
             - name: Set Var
+            - run: echo "Prnting form Job 1"
               id: tag
             - run: echo "NAME=DKA" >> $GITHUB_OUTPUT
             - run: echo "ENABLE=true" >> $GITHUB_OUTPUT
