@@ -6,16 +6,18 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             MY_NAME: ${{steps.tag.outputs.NAME}}
+            ENABLE_JOB: ${{steps.tag.outputs.ENABLE}}
             
         steps: 
             - run: echo "Prnting form Job 1"
             - name: Set Var
               id: tag
-              run: echo "NAME=DKA" >> $GITHUB_OUTPUT
+              - run: echo "NAME=DKA" >> $GITHUB_OUTPUT
+              - run: echo "ENABLE=true" >> $GITHUB_OUTPUT
         
 
     Job2:
-        if: true
+        if: ${{jobs.Job1.outputs.ENABLE_JOB}}
         runs-on: ubuntu-latest
         needs: Job1
         steps:
