@@ -25,4 +25,5 @@ jobs:
             #    release_type: ${{jobs.Job1.outputs.MY_NAME}}
 
             - run: echo "Prnting form Job 2"
-            - run: echo "Got Data From- ${{needs.Job1.outputs.MY_NAME}}"
+            - run: echo "Got Data From - ${{needs.Job1.outputs.MY_NAME}}"
+            - run: echo "Job Enabled - ${{needs.Job1.outputs.ENABLE_JOB}}"
