@@ -1,5 +1,5 @@
 name: Merge branch to master
-run-name: Merge ${{ github.head_ref }} to master 🏷️
+run-name: Merge ${{ github.head_ref }} to master (release) 🏷️
 on:
   pull_request:
     types:
@@ -8,24 +8,68 @@ on:
       - 'main'
 
 jobs:
-  create_tag:
-    name: Create Tag
-    if:  github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
+  extract-tag-in-branch:
+     if: ${{ startsWith(github.head_ref, 'release/') }}
+     name: Find Tag In Branch
+     runs-on: ubuntu-latest
+     outputs:
+       TAG_NAME: ${{steps.branch_tag.outputs.TAG_NAME}}
+     steps: 
+      - name: set Version
+        id: set_branch
+        run: | 
+          echo BRANCH="${{github.head_ref}}" >> $GITHUB_ENV
+          #echo "Branch New: ${BRANCH}"
+      - name: Is Tag Version In Release Branch
+        id: branch_tag
+        #if: ${{ startsWith(github.head_ref, 'release/') }}
+        run: |
+            echo "Release Branch with version"
+            echo "TAG_NAME=${BRANCH/'release/'}" >> $GITHUB_OUTPUT
+
+  find-next-tag-by-branch:
+    name: Find Next Tag By Branch
+    #if:  ${{ !needs.extract-tag-in-branch.outputs.TAG_NAME }}
+    if: ${{ !success() }}
     runs-on: ubuntu-latest
+    needs: extract-tag-in-branch
+    outputs:
+       NEXT_TAG_NAME: ${{steps.tag.outputs.NEXT_TAG_NAME}}
     steps:
-      - name: Filter tag
-        uses: bhowell2/github-substring-action@1.0.2
-        id: one
+      - name: Is branch wihout a version
+        id: branch_release
+        run: |
+           BRANCH="${{ github.head_ref }}" 
+           if [[ $BRANCH == release ]]; then 
+            echo "Identifyed as RELEASE, minor"
+            echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
+           elif [[ $BRANCH == hotfix ]]; then 
+            echo "Identifyed as HOTFIX, patch"
+            echo "RELEASE_TYPE=patch" >> $GITHUB_OUTPUT
+           else 
+            exit 0;
+           fi
+      - name: Initiating Next Version Lookup @
+        uses: actions/checkout@v4
+      - name: Find Next Tag By Branch @
+        id: version
+        uses: reecetech/version-increment@2023.10.1
         with:
-          value: "${{ github.head_ref }}"
-          index_of_str: "release/"
-          output_name: "releaseVersion"
-      - run: echo "Tag by version - ${{steps.one.outputs.releaseVersion}}"
-      - uses: actions/checkout@v4
-      - name: Add Tag
-        uses: rickstaa/action-create-tag@v1
-        with:
-         # github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: "v${{steps.one.outputs.releaseVersion}}"
-          tag_exists_error: false
-          message: "Tag v${{steps.one.outputs.releaseVersion}}"
+          use_api: true
+          increment: ${{ steps.branch_release.outputs.RELEASE_TYPE }}
+      - name: Set Next Tag
+        id: tag
+        run: echo "NEXT_TAG_NAME=${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
+
+  create-tag:
+    if: ${{ always() && (needs.extract-tag-in-branch.outputs.TAG_NAME || needs.find-next-tag-by-branch.outputs.NEXT_TAG_NAME) }}
+    name: Tag Branch
+    runs-on: ubuntu-latest
+    needs: [extract-tag-in-branch, find-next-tag-by-branch]
+    steps:
+      - env:
+          BRANCH_TAG: ${{needs.extract-tag-in-branch.outputs.TAG_NAME}}
+          NEXT_TAG: ${{needs.find-next-tag-by-branch.outputs.NEXT_TAG_NAME}}
+        run: |
+          RELEASING_TAG=$([ $BRANCH_TAG ] && echo "$BRANCH_TAG" || echo "$NEXT_TAG")
+          echo "Taging- $RELEASING_TAG"
