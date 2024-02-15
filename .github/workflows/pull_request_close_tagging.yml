@@ -1,11 +1,11 @@
 name: Merge branch to master
-run-name: Merge ${{ github.head_ref }} to master (hotfix) 🏷️
+run-name: Merge ${{ github.head_ref }} to master (release) 🏷️
 on:
   pull_request:
     types:
       - closed
     branches:
-      - 'master'
+      - 'main'
 
 jobs:
   extract-tag-in-branch:
