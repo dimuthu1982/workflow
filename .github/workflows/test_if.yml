@@ -1,0 +1,16 @@
+name: GitHub Actions Demo - If condition
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - if: true
+        name: If conditiion True
+        run: |
+          echo "The condition met Step 1"
+          echo "The condition met Step 2"
+          
+      - run: echo "Out of if"
+        
+      
