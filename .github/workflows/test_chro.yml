@@ -1,0 +1,9 @@
+name: Do things every 5 minutes 1.10.8
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - run: Running 1.10.8
