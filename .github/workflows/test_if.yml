@@ -5,7 +5,7 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - if: true
+      - if: false
         name: If conditiion True
         run: |
           echo "The condition met Step 1"
