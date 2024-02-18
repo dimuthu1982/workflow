@@ -6,4 +6,5 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - run: Running master
+      - name: Running master
+        run: echo "Running master"
