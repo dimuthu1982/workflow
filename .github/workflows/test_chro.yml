@@ -1,4 +1,4 @@
-name: Do things every 10 minutes master
+name: Do things every 15 minutes master
 on:
   schedule:
     - cron: "*/15 * * * *"
