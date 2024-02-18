@@ -1,0 +1,9 @@
+name: Do things every 5 minutes master
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - run: Running master
