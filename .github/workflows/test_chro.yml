@@ -12,7 +12,7 @@ jobs:
      steps:
         - uses: actions/checkout@v4
         - if: ${{ startsWith(github.head_ref, 'release/') }}
-          name: Find Version From Branch
+          name: Find Release Version From Branch
           id: release_in_branch
           run: | 
             currentBranch="${{github.head_ref}}"
@@ -22,7 +22,7 @@ jobs:
             echo "TAG_NAME=$extractedVersion" >> $GITHUB_OUTPUT
 
         - if: ${{ !env.TAG_NAME }} || true
-          name: Find Release Type Branch
+          name: Find Release version By Branch
           id: release_by_branch
           run: |
             currentBranch="${{ github.head_ref }}" 
@@ -43,6 +43,9 @@ jobs:
         #  id: release_type2
         #  run: echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
 
+        - name: Print Tag
+          run: echo "Name before tag RELEASE_TYPE - ${{steps.release_by_branch.outputs.RELEASE_TYPE}}"
+
         - if: ${{ env.RELEASE_TYPE }}
           name: Initiating Next Version Lookup
           uses: reecetech/version-increment@2023.10.1
@@ -51,8 +54,7 @@ jobs:
               increment: ${{ env.RELEASE_TYPE }}
         - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
 
-       # - name: Print Tag
-       #   run: echo "Name before tag  - ${{steps.release_version.outputs.TAG_NAME}}"
+
 
         - if: ${{ env.TAG_NAME }}
           name: Create Tag
