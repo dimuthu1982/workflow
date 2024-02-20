@@ -29,14 +29,16 @@ jobs:
             currentBranch="release" #TBR
              if [[ $currentBranch == 'release' ]]; then 
               echo "Identifyed as minor release"
-               releaseType="minor"
+               #releaseType="minor"
+               echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
              elif [[ $currentBranch == 'hotfix/' ]]; then 
               echo "Identifyed as patch release"
-                releaseType="patch"
+                #releaseType="patch"
+                 echo "RELEASE_TYPE=patch" >> $GITHUB_OUTPUT
              else 
               exit 0;
              fi
-            echo "RELEASE_TYPE=$releaseType" >> $GITHUB_OUTPUT
+            #echo "RELEASE_TYPE=$releaseType" >> $GITHUB_OUTPUT
 
         #- if: ${{ startsWith(github.head_ref, 'hotfix/') }}
         #  name: Release Branch
