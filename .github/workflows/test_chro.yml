@@ -45,7 +45,7 @@ jobs:
         #  run: echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
 
         - name: Print Tag
-          run: echo "Name before tag RELEASE_TYPE - ${{steps.release_by_branch.outputs.RELEASE_TYPE}}"
+          run: echo "Name before tag RELEASE_TYPE - ${{steps.release_by_branch.outputs.RELEASE_TYPE}}, ${{env.RELEASE_TYPE}}"
 
         - if: ${{ env.RELEASE_TYPE }}
           name: Initiating Next Version Lookup
