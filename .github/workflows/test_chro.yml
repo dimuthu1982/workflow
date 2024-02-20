@@ -11,12 +11,11 @@ jobs:
      #  RELEASE_TYPE: ${{steps.release_by_branch.outputs.RELEASE_TYPE}}
      steps:
         - uses: actions/checkout@v4
-        - if: ${{ startsWith(github.head_ref, 'release/') }} || true
+        - if: ${{ startsWith(github.head_ref, 'release/') }}
           name: Find Release Version From Branch
           id: release_in_branch
           run: | 
             currentBranch="${{github.head_ref}}"
-            currentBranch="release/1.5.0" #TBR
             echo "Branch Name - ${currentBranch}"
             extractedVersion=${currentBranch/'release/'}
             echo "Extracted Version - ${extractedVersion}"
@@ -27,18 +26,16 @@ jobs:
           id: release_by_branch
           run: |
             currentBranch="${{ github.head_ref }}" 
-            currentBranch="hotfix/" #TBR
+            currentBranch="release" #TBR
              if [[ $currentBranch == 'release' ]]; then 
               echo "Identifyed as minor release"
               echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
              elif [[ $currentBranch == 'hotfix/' ]]; then 
               echo "Identifyed as patch release"
-                #releaseType="patch"
-                 echo "RELEASE_TYPE=patch" >> $GITHUB_OUTPUT
+              echo "RELEASE_TYPE=patch" >> $GITHUB_OUTPUT
              else 
               exit 0;
              fi
-            #echo "RELEASE_TYPE=$releaseType" >> $GITHUB_OUTPUT
 
         #- if: ${{ startsWith(github.head_ref, 'hotfix/') }}
         #  name: Release Branch
