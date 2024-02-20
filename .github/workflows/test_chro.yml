@@ -17,8 +17,9 @@ jobs:
             echo BRANCH="${{github.head_ref}}" >> $GITHUB_ENV
             BRANCH="release/1.3.0" #TBR
             echo "Branch New: ${BRANCH}"
-            echo "Release Branch with version"
-            echo "TAG_NAME=${BRANCH/'release/'}" >> $GITHUB_ENV
+            extracted_version=${BRANCH/'release/'}
+            echo "Release Branch with version ($extracted_version)"
+            echo "TAG_NAME=$extracted_version" >> $GITHUB_ENV
             echo "Tag v1 - ${{ env.TAG_NAME }}, ${BRANCH/'release/'}"
 
         - if: ${{ github.head_ref == 'release' }}
