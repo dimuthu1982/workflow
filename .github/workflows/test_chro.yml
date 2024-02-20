@@ -6,9 +6,9 @@ jobs:
      #if: ${{ startsWith(github.head_ref, 'release/') }}
      name: Tag From Latest Version
      runs-on: ubuntu-latest
-     outputs:
-       TAG_NAME: ${{steps.release_in_branch.outputs.TAG_NAME}}
-       RELEASE_TYPE: ${{steps.release_by_branch.outputs.RELEASE_TYPE}}
+     #outputs:
+     #  TAG_NAME: ${{steps.release_in_branch.outputs.TAG_NAME}}
+     #  RELEASE_TYPE: ${{steps.release_by_branch.outputs.RELEASE_TYPE}}
      steps:
         - uses: actions/checkout@v4
         - if: ${{ startsWith(github.head_ref, 'release/') }} || true
@@ -47,8 +47,8 @@ jobs:
 
         - name: Print Tag
           run: | 
-            echo " Release_Tag - ${{ env.TAG_NAME }}"
-            echo "Name before tag RELEASE_TYPE - ${{steps.release_by_branch.outputs.RELEASE_TYPE}}, ${{env.RELEASE_TYPE}}"
+            echo " Release_Tag - ${{steps.release_in_branch.outputs.TAG_NAME}}"
+            echo "Name before tag RELEASE_TYPE - ${{steps.release_by_branch.outputs.RELEASE_TYPE}}"
 
         - if: ${{ env.RELEASE_TYPE }}
           name: Initiating Next Version Lookup
@@ -57,8 +57,6 @@ jobs:
               use_api: true
               increment: ${{ env.RELEASE_TYPE }}
         - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
-
-
 
         - if: ${{ env.TAG_NAME }}
           name: Create Tag
