@@ -6,8 +6,8 @@ jobs:
      #if: ${{ startsWith(github.head_ref, 'release/') }}
      name: Tag From Latest Version
      runs-on: ubuntu-latest
-     #outputs:
-       #TAG_NAME: ${{steps.branch_tag.outputs.TAG_NAME}}
+     outputs:
+       TAG_NAME: ${{steps.release_version.outputs.TAG_NAME}}
      steps:
         - uses: actions/checkout@v4
         - if: ${{ startsWith(github.head_ref, 'release/') }} || true
@@ -19,8 +19,8 @@ jobs:
             echo "Branch Name - ${currentBranch}"
             extractedVersion=${currentBranch/'release/'}
             echo "Extracted Version - ${extractedVersion}"
-            echo "TAG_NAME=$extractedVersion" >> $GITHUB_ENV
-            echo "Tag v1 - $TAG_NAME, ${TAG_NAME}"
+            echo "TAG_NAME=$extractedVersion" >> $GITHUB_OUTPUT
+            #echo "Tag v1 - $TAG_NAME, ${TAG_NAME}"
 
         - if: ${{ github.head_ref == 'release' }}
           name: Release Branch
@@ -41,7 +41,7 @@ jobs:
         - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
 
         - name: Print Tag
-          run: echo "Name before tag  - ${{env.TAG_NAME}}"
+          run: echo "Name before tag  - ${{steps.release_version.outputs.TAG_NAME}}"
 
         - if: ${{ env.TAG_NAME }}
           name: Create Tag
