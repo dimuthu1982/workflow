@@ -44,7 +44,7 @@ jobs:
           with:
               use_api: true
               increment: ${{ steps.release_type.outputs.RELEASE_TYPE }}
-        - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
+        - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_OUTPUT
 
         - name: Print Tag
           run: | 
