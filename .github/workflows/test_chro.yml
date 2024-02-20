@@ -15,12 +15,11 @@ jobs:
           id: release_version
           run: | 
             currentBranch="${{github.head_ref}}"
-            currentBranch="release/1.3.0" #TBR
+            currentBranch="release/1.4.0" #TBR
             echo "Branch Name - ${currentBranch}"
             extractedVersion=${currentBranch/'release/'}
             echo "Extracted Version - ${extractedVersion}"
             echo "TAG_NAME=$extractedVersion" >> $GITHUB_OUTPUT
-            #echo "Tag v1 - $TAG_NAME, ${TAG_NAME}"
 
         - if: ${{ github.head_ref == 'release' }}
           name: Release Branch
@@ -40,8 +39,8 @@ jobs:
               increment: ${{ env.RELEASE_TYPE }}
         - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
 
-        - name: Print Tag
-          run: echo "Name before tag  - ${{steps.release_version.outputs.TAG_NAME}}"
+       # - name: Print Tag
+       #   run: echo "Name before tag  - ${{steps.release_version.outputs.TAG_NAME}}"
 
         - if: ${{ env.TAG_NAME }}
           name: Create Tag
