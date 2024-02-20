@@ -23,7 +23,7 @@ jobs:
           id: release_type
           run: |
             currentBranch="${{ github.head_ref }}" 
-            currentBranch="hotfix/" #TBR
+            currentBranch="release" #TBR
              if [[ $currentBranch == 'release' ]]; then 
               echo "Identifyed as minor release"
               echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
