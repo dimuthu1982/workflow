@@ -61,7 +61,7 @@ jobs:
         - if: ${{ steps.release_in_branch.outputs.TAG_NAME }}
           name: Create Tag
           run: |
-            RELEASING_TAG=${{ env.TAG_NAME }}
+            RELEASING_TAG=${{ steps.release_in_branch.outputs.TAG_NAME }}
             echo "Next Tag - $RELEASING_TAG"
             git config --global user.name ${{ github.triggering_actor }}
             git config --global user.email dimuthu.abeynayakage@sportsbet.com.au
