@@ -1,5 +1,5 @@
 name: Merge branch to master
-run-name: Merge ${{ github.head_ref }} to master (release) 🏷️
+run-name: Merge ${{ github.head_ref }} to master (hotfix/) 🏷️
 on: [push]
 jobs:
   extract-tag-in-branch:
@@ -26,7 +26,7 @@ jobs:
           id: release_type
           run: |
             currentBranch="${{ github.head_ref }}" 
-            currentBranch="release" #TBR
+            currentBranch="hotfix/" #TBR
              if [[ $currentBranch == 'release' ]]; then 
               echo "Identifyed as minor release"
               echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
