@@ -11,11 +11,12 @@ jobs:
        RELEASE_TYPE: ${{steps.release_by_branch.outputs.RELEASE_TYPE}}
      steps:
         - uses: actions/checkout@v4
-        - if: ${{ startsWith(github.head_ref, 'release/') }}
+        - if: ${{ startsWith(github.head_ref, 'release/') }} || true
           name: Find Release Version From Branch
           id: release_in_branch
           run: | 
             currentBranch="${{github.head_ref}}"
+            currentBranch="release/1.5.0" #TBR
             echo "Branch Name - ${currentBranch}"
             extractedVersion=${currentBranch/'release/'}
             echo "Extracted Version - ${extractedVersion}"
@@ -45,7 +46,9 @@ jobs:
         #  run: echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
 
         - name: Print Tag
-          run: echo "Name before tag RELEASE_TYPE - ${{steps.release_by_branch.outputs.RELEASE_TYPE}}, ${{env.RELEASE_TYPE}}"
+          run: | 
+            echo " Release_Tag - ${{ env.TAG_NAME }}"
+            echo "Name before tag RELEASE_TYPE - ${{steps.release_by_branch.outputs.RELEASE_TYPE}}, ${{env.RELEASE_TYPE}}"
 
         - if: ${{ env.RELEASE_TYPE }}
           name: Initiating Next Version Lookup
