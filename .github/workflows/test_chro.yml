@@ -10,7 +10,7 @@ jobs:
        TAG_NAME: ${{steps.branch_tag.outputs.TAG_NAME}}
      steps:
         - uses: actions/checkout@v4
-        - if: ${{ startsWith(github.head_ref, 'release/') }}
+        - if: ${{ startsWith(github.head_ref, 'release/') }} || true
           name: Find Version From Branch
           id: release_version
           run: | 
