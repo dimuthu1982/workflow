@@ -40,6 +40,9 @@ jobs:
               increment: ${{ env.RELEASE_TYPE }}
         - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
 
+        - name: Print Tag
+          run: echo "Name before tag  - ${{env.TAG_NAME}}"
+
         - if: ${{ env.TAG_NAME }}
           name: Create Tag
           run: |
