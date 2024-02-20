@@ -6,9 +6,6 @@ jobs:
      #if: ${{ startsWith(github.head_ref, 'release/') }}
      name: Tag From Latest Version
      runs-on: ubuntu-latest
-     #outputs:
-     #  TAG_NAME: ${{steps.release_in_branch.outputs.TAG_NAME}}
-     #  RELEASE_TYPE: ${{steps.release_type.outputs.RELEASE_TYPE}}
      steps:
         - uses: actions/checkout@v4
         - if: ${{ startsWith(github.head_ref, 'release/') }}
@@ -26,7 +23,6 @@ jobs:
           id: release_type
           run: |
             currentBranch="${{ github.head_ref }}" 
-            currentBranch="hotfix/" #TBR
              if [[ $currentBranch == 'release' ]]; then 
               echo "Identifyed as minor release"
               echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
@@ -44,14 +40,16 @@ jobs:
           with:
               use_api: true
               increment: ${{ steps.release_type.outputs.RELEASE_TYPE }}
-        - run: echo "TAG_NAME=${{ steps.next_version_by_branch.outputs.version }}" >> $GITHUB_OUTPUT
+              
+        - name: Next Release Version
+          id: next_version
+          run: echo "TAG_NAME=${{ steps.next_version_by_branch.outputs.version }}" >> $GITHUB_OUTPUT
 
         - name: Print Tag
           run: | 
-            echo " Release_Tag - ${{ steps.release_in_branch.outputs.TAG_NAME }}"
-            echo "Name before tag RELEASE_TYPE - ${{ steps.release_type.outputs.RELEASE_TYPE }}"
-            echo "Release Version By Branch - ${{ steps.next_version_by_branch.outputs.TAG_NAME }}"
-            echo "Release Version By Branch v1 -${{ steps.next_version_by_branch.outputs.version }}"
+            echo "Release Tag - ${{ steps.release_in_branch.outputs.TAG_NAME }}"
+            echo "Next Release -${{ steps.next_version_by_branch.outputs.version }}"
+            echo "Next Release v1 -${{ steps.next_version.outputs.TAG_NAME }}"
 
         - if: ${{ steps.release_in_branch.outputs.TAG_NAME || steps.next_version_by_branch.outputs.version }}
           name: Create Tag
