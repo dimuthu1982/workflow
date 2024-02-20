@@ -51,6 +51,7 @@ jobs:
             echo " Release_Tag - ${{ steps.release_in_branch.outputs.TAG_NAME }}"
             echo "Name before tag RELEASE_TYPE - ${{ steps.release_type.outputs.RELEASE_TYPE }}"
             echo "Release Version By Branch - ${{ steps.next_version_by_branch.outputs.TAG_NAME }}"
+            echo "Release Version By Branch v1 -${{ steps.next_version_by_branch.outputs.version }}"
 
         - if: ${{ steps.release_in_branch.outputs.TAG_NAME }}
           name: Create Tag
