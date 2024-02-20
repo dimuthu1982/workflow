@@ -19,6 +19,7 @@ jobs:
             echo "Branch New: ${BRANCH}"
             echo "Release Branch with version"
             echo "TAG_NAME=${BRANCH/'release/'}" >> $GITHUB_ENV
+            echo "Tag - ${{env.TAG_NAME}}"
 
         - if: ${{ github.head_ref == 'release' }}
           name: Release Branch
@@ -39,6 +40,7 @@ jobs:
         - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
 
         - if: ${{ env.TAG_NAME }}
+          name: Create Tag
           run: |
             RELEASING_TAG=${{ env.TAG_NAME }}
             echo "Next Tag - $RELEASING_TAG"
