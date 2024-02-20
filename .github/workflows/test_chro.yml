@@ -19,7 +19,7 @@ jobs:
             echo "Branch Name - ${currentBranch}"
             extractedVersion=${currentBranch/'release/'}
             echo "Extracted Version - ${extractedVersion}"
-            "TAG_NAME=$extracted_version" >> $GITHUB_ENV
+            echo "TAG_NAME=$extractedVersion" >> $GITHUB_ENV
             echo "Tag v1 - $TAG_NAME, ${TAG_NAME}"
 
         - if: ${{ github.head_ref == 'release' }}
