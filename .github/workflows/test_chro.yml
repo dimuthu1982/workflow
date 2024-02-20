@@ -22,7 +22,7 @@ jobs:
             echo "Extracted Version - ${extractedVersion}"
             echo "TAG_NAME=$extractedVersion" >> $GITHUB_OUTPUT
 
-        - if: ${{ !env.TAG_NAME }}
+        - if: ${{ !steps.release_in_branch.outputs.TAG_NAME }}
           name: Find Release version By Branch
           id: release_by_branch
           run: |
@@ -47,8 +47,8 @@ jobs:
 
         - name: Print Tag
           run: | 
-            echo " Release_Tag - ${{steps.release_in_branch.outputs.TAG_NAME}}"
-            echo "Name before tag RELEASE_TYPE - ${{steps.release_by_branch.outputs.RELEASE_TYPE}}"
+            echo " Release_Tag - ${{ steps.release_in_branch.outputs.TAG_NAME }}"
+            echo "Name before tag RELEASE_TYPE - ${{ steps.release_by_branch.outputs.RELEASE_TYPE }}"
 
         - if: ${{ env.RELEASE_TYPE }}
           name: Initiating Next Version Lookup
@@ -58,7 +58,7 @@ jobs:
               increment: ${{ env.RELEASE_TYPE }}
         - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
 
-        - if: ${{ env.TAG_NAME }}
+        - if: ${{ steps.release_in_branch.outputs.TAG_NAME }}
           name: Create Tag
           run: |
             RELEASING_TAG=${{ env.TAG_NAME }}
