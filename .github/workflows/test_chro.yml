@@ -22,7 +22,7 @@ jobs:
             echo "Extracted Version - ${extractedVersion}"
             echo "TAG_NAME=$extractedVersion" >> $GITHUB_OUTPUT
 
-        - if: ${{ !env.TAG_NAME }} || true
+        - if: ${{ !env.TAG_NAME }}
           name: Find Release version By Branch
           id: release_by_branch
           run: |
