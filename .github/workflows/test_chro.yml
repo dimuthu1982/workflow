@@ -8,7 +8,7 @@ jobs:
      runs-on: ubuntu-latest
      #outputs:
      #  TAG_NAME: ${{steps.release_in_branch.outputs.TAG_NAME}}
-     #  RELEASE_TYPE: ${{steps.release_by_branch.outputs.RELEASE_TYPE}}
+     #  RELEASE_TYPE: ${{steps.release_type.outputs.RELEASE_TYPE}}
      steps:
         - uses: actions/checkout@v4
         - if: ${{ startsWith(github.head_ref, 'release/') }}
@@ -23,7 +23,7 @@ jobs:
 
         - if: ${{ !steps.release_in_branch.outputs.TAG_NAME }}
           name: Find Release version By Branch
-          id: release_by_branch
+          id: release_type
           run: |
             currentBranch="${{ github.head_ref }}" 
             currentBranch="release" #TBR
@@ -37,23 +37,20 @@ jobs:
               exit 0;
              fi
 
-        #- if: ${{ startsWith(github.head_ref, 'hotfix/') }}
-        #  name: Release Branch
-        #  id: release_type2
-        #  run: echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
+        - if: ${{ steps.release_type.outputs.RELEASE_TYPE }}
+          name: Initiating Next Version Lookup
+          id: release_by_branch
+          uses: reecetech/version-increment@2023.10.1
+          with:
+              use_api: true
+              increment: ${{ steps.release_type.outputs.RELEASE_TYPE }}
+        - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
 
         - name: Print Tag
           run: | 
             echo " Release_Tag - ${{ steps.release_in_branch.outputs.TAG_NAME }}"
-            echo "Name before tag RELEASE_TYPE - ${{ steps.release_by_branch.outputs.RELEASE_TYPE }}"
-
-        - if: ${{ env.RELEASE_TYPE }}
-          name: Initiating Next Version Lookup
-          uses: reecetech/version-increment@2023.10.1
-          with:
-              use_api: true
-              increment: ${{ env.RELEASE_TYPE }}
-        - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_ENV
+            echo "Name before tag RELEASE_TYPE - ${{ steps.release_type.outputs.RELEASE_TYPE }}"
+            echo "Release Version By Branch - ${{ steps.release_by_branch.outputs.TAG_NAME }}"
 
         - if: ${{ steps.release_in_branch.outputs.TAG_NAME }}
           name: Create Tag
