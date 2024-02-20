@@ -1,5 +1,5 @@
 name: Merge branch to master
-run-name: Merge ${{ github.head_ref }} to master (hotfix) 🏷️
+run-name: Merge ${{ github.head_ref }} to master (release) 🏷️
 on: [push]
 jobs:
   extract-tag-in-branch:
@@ -7,29 +7,41 @@ jobs:
      name: Tag From Latest Version
      runs-on: ubuntu-latest
      outputs:
-       TAG_NAME: ${{steps.release_version.outputs.TAG_NAME}}
+       TAG_NAME: ${{steps.release_in_branch.outputs.TAG_NAME}}
+       RELEASE_TYPE: ${{steps.release_by_branch.outputs.RELEASE_TYPE}}
      steps:
         - uses: actions/checkout@v4
-        - if: ${{ startsWith(github.head_ref, 'release/') }} || true
+        - if: ${{ startsWith(github.head_ref, 'release/') }}
           name: Find Version From Branch
-          id: release_version
+          id: release_in_branch
           run: | 
             currentBranch="${{github.head_ref}}"
-            currentBranch="release/1.4.0" #TBR
             echo "Branch Name - ${currentBranch}"
             extractedVersion=${currentBranch/'release/'}
             echo "Extracted Version - ${extractedVersion}"
             echo "TAG_NAME=$extractedVersion" >> $GITHUB_OUTPUT
 
-        - if: ${{ github.head_ref == 'release' }}
-          name: Release Branch
-          id: release_type1
-          run: echo "RELEASE_TYPE=minor" >> $GITHUB_ENV
+        - if: ${{ !env.TAG_NAME }} || true
+          name: Find Release Type Branch
+          id: release_by_branch
+          run: |
+            currentBranch="${{ github.head_ref }}" 
+            currentBranch="release" #TBR
+             if [[ $BRANCH == 'release' ]]; then 
+              echo "Identifyed as minor release"
+              echo "releaseType=minor" >> $GITHUB_OUTPUT
+             elif [[ $BRANCH == 'hotfix/' ]]; then 
+              echo "Identifyed as patch release"
+              echo "releaseType=patch" >> $GITHUB_OUTPUT
+             else 
+              exit 0;
+             fi
+            echo "RELEASE_TYPE=$releaseType" >> $GITHUB_ENV
 
-        - if: ${{ startsWith(github.head_ref, 'hotfix/') }}
-          name: Release Branch
-          id: release_type2
-          run: echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
+        #- if: ${{ startsWith(github.head_ref, 'hotfix/') }}
+        #  name: Release Branch
+        #  id: release_type2
+        #  run: echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
 
         - if: ${{ env.RELEASE_TYPE }}
           name: Initiating Next Version Lookup
