@@ -22,8 +22,7 @@ jobs:
           name: Find Release version By Branch
           id: release_type
           run: |
-            currentBranch="${{ github.head_ref }}" 
-            currentBranch="release" #TBR
+             currentBranch="${{ github.head_ref }}" 
              if [[ $currentBranch == 'release' ]]; then 
               echo "Identifyed as minor release"
               echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
@@ -49,7 +48,7 @@ jobs:
         - name: Print Tag
           run: | 
             echo "Release Tag - ${{ steps.release_tag_in_branch.outputs.TAG_NAME }}"
-            echo "Next Release -${{ steps.next_version.outputs.TAG_NAME }}"
+            echo "Next Release - ${{ steps.next_version.outputs.TAG_NAME }}"
 
         - if: ${{ steps.release_tag_in_branch.outputs.TAG_NAME || steps.next_version.outputs.TAG_NAME }}
           name: Create Tag
