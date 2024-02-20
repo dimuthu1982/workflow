@@ -1,5 +1,5 @@
 name: Merge branch to master
-run-name: Merge ${{ github.head_ref }} to master (hotfix/) 🏷️
+run-name: Merge ${{ github.head_ref }} to master (hotfix - 1.6.2) 🏷️
 on: [push]
 jobs:
   extract-tag-in-branch:
