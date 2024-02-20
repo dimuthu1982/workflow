@@ -39,12 +39,12 @@ jobs:
 
         - if: ${{ steps.release_type.outputs.RELEASE_TYPE }}
           name: Initiating Next Version Lookup
-          id: release_by_branch
+          id: next_version_by_branch
           uses: reecetech/version-increment@2023.10.1
           with:
               use_api: true
               increment: ${{ steps.release_type.outputs.RELEASE_TYPE }}
-        - run: echo "TAG_NAME=${{ steps.release_version.outputs.TAG_NAME }}" >> $GITHUB_OUTPUT
+        - run: echo "TAG_NAME=${{ steps.next_version_by_branch.outputs.version }}" >> $GITHUB_OUTPUT
 
         - name: Print Tag
           run: | 
